@@ -57,6 +57,7 @@ public class Pantalla extends JFrame implements ActionListener{
 		if(e.getSource()==botonIniciar){
 			
 			Servidor.IniciarServidor();
+			botonIniciar.setEnabled(false);
 		}
 	}
 	
