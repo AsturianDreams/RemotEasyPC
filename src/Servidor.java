@@ -11,14 +11,14 @@ public final class  Servidor implements Runnable{
 	static boolean ocupado;   // solo puede haber 1 conexion al mismo tiempo aqui controlamos que no pueda haber 2
 	
 	static final int PUERTO = 9097;
-	//ME pesan los guevos
+	
 	public Servidor(){
 		ocupado=false;
 		 p1=new Pantalla();
 	}
 
 	
-
+//tiririr
 	
 	public static void main(String[] args) {
 		
