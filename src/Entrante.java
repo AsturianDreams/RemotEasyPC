@@ -76,7 +76,7 @@ public class Entrante extends Thread{
 	public void MandarImagen(){
 		Socket videoClient;
 		try {
-			videoClient = new Socket("81.9.241.59", 9094);
+			videoClient = new Socket(Ip, 9094);
 			EnviarImagen a=new EnviarImagen(videoClient);
 			a.start();
 		} catch (UnknownHostException e) {
