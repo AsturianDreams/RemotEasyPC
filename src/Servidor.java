@@ -12,6 +12,7 @@ public final class  Servidor implements Runnable{
 	
 	static final int PUERTO = 9097;
 	//ME pesan los guevos
+	//jiji
 	public Servidor(){
 		ocupado=false;
 		 p1=new Pantalla();
