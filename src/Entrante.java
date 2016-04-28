@@ -27,11 +27,21 @@ public class Entrante extends Thread{
 	
 	
 	public void run(){
+		try {
+		DataOutputStream flujoEntrada = new DataOutputStream (conexion.getOutputStream());
+		flujoEntrada.writeUTF("asdsadsds");
+		
+			flujoEntrada.flush();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	try{
 		
 			while(cerrarConexion){
 				
 				while(queHacer==0){
+					
 					
 					sleep(1000);
 					//verificamos si se cerro la conexion
@@ -66,33 +76,18 @@ public class Entrante extends Thread{
 				e.printStackTrace();
 				p1.setText("error en los envios de datos"+ Ip);
 			}//fin try
- catch (InterruptedException e) {
-	 p1.setText("fallo al esperar el hilo"+ Ip);
-		e.printStackTrace();
-	}
+			 catch (InterruptedException e) {
+				 p1.setText("fallo al esperar el hilo"+ Ip);
+					e.printStackTrace();
+				}
 	
-	}
+	}//fin run
 	
-	public void MandarImagen(){
-		Socket videoClient;
-		try {
-			videoClient = new Socket(Ip, 9094);
-			EnviarImagen a=new EnviarImagen(videoClient);
-			a.start();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	
 	
 		
 		
-		
-		
-	}
+	
 	
 	
 }

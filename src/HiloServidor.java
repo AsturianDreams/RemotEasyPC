@@ -26,10 +26,10 @@ public class HiloServidor extends Thread{
 			}
 		
 			 catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 					p1.setText("ERRORAL INICIAR EL SERVIDOR... "
 				     + "COMPRUEBA QUE EL PUERTO 9098 ESTA LIBRE Y REINICIE LA APLICACION");
+					p1.setText("SI EL ERROR PERSISTE ABRA EL ADMINISTRADOR DE TAREAS, CIERRE LOS PROCESOS JAVAW.EXE Y VUELVA A INTENTARLO ");
+					p1.botonIniciar.setEnabled(true);
 				}
 		
 	}

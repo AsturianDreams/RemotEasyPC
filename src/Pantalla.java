@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 public class Pantalla extends JFrame implements ActionListener{
 	
 	
@@ -24,6 +26,9 @@ public class Pantalla extends JFrame implements ActionListener{
 	JButton botonIniciar;
 	JButton botonParar;
 	JScrollPane scrolito; 
+	JMenuBar mainMenuBar;
+	JMenu menuAyuda, menuInformacion;
+	JMenuItem menuItemHelp,  subInformacion, menuItemHelp2;
 	
 	public Pantalla(){
 		super("RemotEasy");
@@ -51,17 +56,49 @@ public class Pantalla extends JFrame implements ActionListener{
 		panelGeneral.add(panel2, BorderLayout.EAST);
 		panel1.add(pant);
 		
-	
-		panel2.add(botonIniciar);
-		panel2.add(botonParar);
 		
+		
+		
+		panelGeneral.setBorder(new EmptyBorder(20, 20, 20, 20));
+		subPanel1.setBorder(new EmptyBorder(100, 0, 0, 0));
+		subPanel2.setBorder(new EmptyBorder(0, 0, 0, 0));
 		botonIniciar.addActionListener(this);
 		
 		scrolito = new JScrollPane(pant); 
 		panelGeneral.add(scrolito);		
 		scrolito.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-	
 		
+		//menu start
+		mainMenuBar = new JMenuBar();
+		menuAyuda = new JMenu("Ayuda");
+			 menuItemHelp = new JMenuItem("Informacion1");
+			 menuItemHelp2 = new JMenuItem("Informacion2");
+			 menuAyuda.add( menuItemHelp);
+			 menuAyuda.add( menuItemHelp2);
+			 menuItemHelp.addActionListener(this);
+			 menuItemHelp2.addActionListener(this);
+			 
+		menuInformacion = new JMenu("Informacion");	
+			subInformacion = new JMenuItem("Acerca De");
+			subInformacion.addActionListener(this);
+			menuInformacion.add(subInformacion);
+		
+		 
+		mainMenuBar.add(menuAyuda);
+		mainMenuBar.add(menuInformacion);
+		
+		
+		menuItemHelp.addActionListener(this);
+		
+		
+		
+		setJMenuBar(mainMenuBar);
+		//fin menu
+		
+		subPanel1.add(botonIniciar);
+		subPanel2.add(botonParar);
+		panel2.add(subPanel1);
+		panel2.add(subPanel2);
 		add(panelGeneral);
 		setVisible(true);
 		
@@ -71,7 +108,7 @@ public class Pantalla extends JFrame implements ActionListener{
 	public void setText(String texto){
 		pant.append("\n" + texto);
 	}
-
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -80,6 +117,11 @@ public class Pantalla extends JFrame implements ActionListener{
 			
 			Servidor.IniciarServidor();
 			botonIniciar.setEnabled(false);
+		}
+		
+		if(e.getSource()==subInformacion){
+			
+			JOptionPane.showMessageDialog(null, "Aplicacion Creada Por Saúl Blanco Y Eros Tamargo \n para Proyecto del Grado superior de Desarrollo de aplicaciones multiplataforma", "RemotEasy", 1);
 		}
 	}
 	
