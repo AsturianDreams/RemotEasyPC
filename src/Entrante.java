@@ -11,15 +11,15 @@ public class Entrante extends Thread{
 
 	private Socket conexion;
 	private Pantalla p1; //pantalla traida de la clase servidor general del programa
-	private int queHacer;
-	private boolean cerrarConexion;
+	private String queHacer;
 	String Ip;
+	private robotControl robot;
 	
 	public Entrante(Socket c, Pantalla p, String ip){
 		Ip=ip;
-		cerrarConexion=true;
-		queHacer=0;
+		queHacer="";
 		conexion=c;
+		robot= new robotControl(p);
 		p1=p;
 		Thread hilo = new Thread(this);
 		hilo.start();	
@@ -27,67 +27,49 @@ public class Entrante extends Thread{
 	
 	
 	public void run(){
-		try {
-		DataOutputStream flujoEntrada = new DataOutputStream (conexion.getOutputStream());
-		flujoEntrada.writeUTF("asdsadsds");
 		
-			flujoEntrada.flush();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	try{
-		
-			while(cerrarConexion){
-				
-				while(queHacer==0){
-					
-					
+		DataInputStream flujoEntrada = new DataInputStream (conexion.getInputStream());
+		queHacer= flujoEntrada.readUTF();
+			while(true){
 					sleep(1000);
-					//verificamos si se cerro la conexion
-					if(conexion.isClosed()){
-						
-						cerrarConexion=false;
-						JOptionPane.showMessageDialog(null, "La conexion fue cerrada por inactividad ");
-					}
+				//verificamos si se cerro la conexion
+				switch (queHacer){
+				case "moverRaton":
+					robot.clickEn(50, 50, robot.BOTON_IZQUIERDO);
+					p1.setText("raton movio");
+					queHacer="";
+					break;
+				case "probar":
 					
-			
-					if(queHacer==1){
-						DataOutputStream flujoSalida = new DataOutputStream (conexion.getOutputStream());
-						flujoSalida.writeUTF("1");
-						flujoSalida.flush();
-					
-						queHacer=0;
-						sleep(2000);
-						
-						}
-				
-					
-					}	
-				
-				
-			}//while cerrarconexion
-			
-			p1.setText("la Conexion ha sido cerrada con " + Ip);
-			conexion.close();
-			
-			}catch (IOException e) {
-				
-				e.printStackTrace();
-				p1.setText("error en los envios de datos"+ Ip);
-			}//fin try
-			 catch (InterruptedException e) {
-				 p1.setText("fallo al esperar el hilo"+ Ip);
-					e.printStackTrace();
+					break;
 				}
+							
+
+			}//while 
+		
 	
+	
+	}//fin try
+	catch (IOException e) {				
+		p1.setText("La conexion con: "+ Ip + " ha sido cerrada");
+	//	p1.botonIniciar.setEnabled(true); activar si no queremos que el servidor se ponga a escuchar automatico
+		new HiloServidor(p1);  // desactrivar si no queremos que se reinicie el servidor al acabar con un cliente (manual)
+		try {
+			conexion.close();
+		} catch (IOException e1) {
+			p1.setText("fallo cerrando la conexion!!!");			
+		}
+		
+	} catch (InterruptedException e) {
+		//error del sleep
+	}
+
+	
+	
+
+		
 	}//fin run
-	
-	
-	
-		
-		
-	
 	
 	
 }

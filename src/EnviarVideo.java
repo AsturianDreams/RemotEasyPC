@@ -50,10 +50,10 @@ public EnviarVideo(Socket a, Pantalla p1){
 			
 		} catch (IOException e) {
 			error=true;
-			//JOptionPane.showMessageDialog(null, "cerrao");
+			p1.setText("La conexion de video ha terminado");
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			p1.setText("La conexion de video ha terminado");
+			error=true;
 		}
 	}
 }
