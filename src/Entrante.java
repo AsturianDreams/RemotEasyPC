@@ -21,6 +21,7 @@ public class Entrante extends Thread{
 		conexion=c;
 		robot= new robotControl(p);
 		p1=p;
+		p1.setSocket(c);
 		Thread hilo = new Thread(this);
 		hilo.start();	
 	}
@@ -30,8 +31,9 @@ public class Entrante extends Thread{
 		
 	try{
 		DataInputStream flujoEntrada = new DataInputStream (conexion.getInputStream());
-		queHacer= flujoEntrada.readUTF();
-			while(true){
+		
+			while(!conexion.isClosed()){
+				queHacer= flujoEntrada.readUTF();
 					sleep(1000);
 				//verificamos si se cerro la conexion
 				switch (queHacer){
@@ -51,21 +53,14 @@ public class Entrante extends Thread{
 	
 	
 	}//fin try
-	catch (IOException e) {				
-		p1.setText("La conexion con: "+ Ip + " ha sido cerrada");
-	//	p1.botonIniciar.setEnabled(true); activar si no queremos que el servidor se ponga a escuchar automatico
-		new HiloServidor(p1);  // desactrivar si no queremos que se reinicie el servidor al acabar con un cliente (manual)
-		try {
-			conexion.close();
-		} catch (IOException e1) {
-			p1.setText("fallo cerrando la conexion!!!");			
-		}
-		
-	} catch (InterruptedException e) {
+	catch (IOException e) {			
+		p1.cerrarConexion();
+	}
+	catch (InterruptedException e) {
 		//error del sleep
 	}
-
 	
+		
 	
 
 		

@@ -13,11 +13,10 @@ import java.net.UnknownHostException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-public class Pantalla extends JFrame implements ActionListener{
-	
-	
-	
-	 JTextArea pant;
+
+public class Pantalla extends JFrame implements ActionListener {
+
+	JTextArea pant;
 	JPanel panelGeneral;
 	JPanel panel1;
 	JPanel panel2;
@@ -25,105 +24,133 @@ public class Pantalla extends JFrame implements ActionListener{
 	JPanel subPanel2;
 	JButton botonIniciar;
 	JButton botonParar;
-	JScrollPane scrolito; 
+	JScrollPane scrolito;
 	JMenuBar mainMenuBar;
 	JMenu menuAyuda, menuInformacion;
-	JMenuItem menuItemHelp,  subInformacion, menuItemHelp2;
-	
-	public Pantalla(){
+	JMenuItem menuItemHelp, subInformacion, menuItemHelp2;
+	Socket conexion;
+
+	public Pantalla() {
 		super("RemotEasy");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setSize(750,500);
-		
-		panelGeneral= new JPanel(new BorderLayout(20,20));
-		panel1= new JPanel();
-		panel2= new JPanel();
-		BoxLayout a=new BoxLayout(panel2, BoxLayout.PAGE_AXIS);
-		
+		setSize(750, 500);
+
+		panelGeneral = new JPanel(new BorderLayout(20, 20));
+		panel1 = new JPanel();
+		panel2 = new JPanel();
+		BoxLayout a = new BoxLayout(panel2, BoxLayout.PAGE_AXIS);
+
 		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
-		subPanel1= new JPanel();
-		subPanel2= new JPanel();
-		
-		pant= new JTextArea(0,0); //no importa tamaño el layout lo ajusta al panel
+		subPanel1 = new JPanel();
+		subPanel2 = new JPanel();
+
+		pant = new JTextArea(0, 0); // no importa tamaño el layout lo ajusta al
+									// panel
 		pant.setEditable(false);
-		botonIniciar = new JButton("Arrancar");	
-		botonParar = new JButton("Detener");
-		
-		
+		botonIniciar = new JButton("Arrancar");
+		botonParar = new JButton("Reinciar");
+
 		panelGeneral.add(panel1, BorderLayout.WEST);
 		panelGeneral.add(panel2, BorderLayout.EAST);
 		panel1.add(pant);
-		
-		
-		
-		
+
 		panelGeneral.setBorder(new EmptyBorder(20, 20, 20, 20));
 		subPanel1.setBorder(new EmptyBorder(100, 0, 0, 0));
 		subPanel2.setBorder(new EmptyBorder(0, 0, 0, 0));
 		botonIniciar.addActionListener(this);
-		
-		scrolito = new JScrollPane(pant); 
-		panelGeneral.add(scrolito);		
+		botonParar.addActionListener(this);
+
+		scrolito = new JScrollPane(pant);
+		panelGeneral.add(scrolito);
 		scrolito.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		//menu start
+
+		// menu start
 		mainMenuBar = new JMenuBar();
 		menuAyuda = new JMenu("Ayuda");
-			 menuItemHelp = new JMenuItem("Informacion1");
-			 menuItemHelp2 = new JMenuItem("Informacion2");
-			 menuAyuda.add( menuItemHelp);
-			 menuAyuda.add( menuItemHelp2);
-			 menuItemHelp.addActionListener(this);
-			 menuItemHelp2.addActionListener(this);
-			 
-		menuInformacion = new JMenu("Informacion");	
-			subInformacion = new JMenuItem("Acerca De");
-			subInformacion.addActionListener(this);
-			menuInformacion.add(subInformacion);
-		
-		 
+		menuItemHelp = new JMenuItem("Informacion1");
+		menuItemHelp2 = new JMenuItem("Informacion2");
+		menuAyuda.add(menuItemHelp);
+		menuAyuda.add(menuItemHelp2);
+		menuItemHelp.addActionListener(this);
+		menuItemHelp2.addActionListener(this);
+
+		menuInformacion = new JMenu("Informacion");
+		subInformacion = new JMenuItem("Acerca De");
+		subInformacion.addActionListener(this);
+		menuInformacion.add(subInformacion);
+
 		mainMenuBar.add(menuAyuda);
 		mainMenuBar.add(menuInformacion);
-		
-		
+
 		menuItemHelp.addActionListener(this);
-		
-		
-		
+
 		setJMenuBar(mainMenuBar);
-		//fin menu
-		
+		// fin menu
+
 		subPanel1.add(botonIniciar);
 		subPanel2.add(botonParar);
 		panel2.add(subPanel1);
 		panel2.add(subPanel2);
 		add(panelGeneral);
 		setVisible(true);
-		
+		botonParar.setEnabled(false);
+
 	}
-	
-	
-	public void setText(String texto){
+
+	public void setSocket(Socket s) {
+		this.conexion = s;
+	}
+
+	public void setText(String texto) {
 		pant.append("\n" + texto);
 	}
-	
+
+	public void cerrarConexion() {
+		if (conexion != null) {
+			setText("La conexion  ha sido cerrada");
+			try {
+				conexion.close();
+			} catch (IOException e1) {
+				setText("fallo cerrando la conexion!!!");
+
+			}
+			setSocket(null);
+			// p1.botonIniciar.setEnabled(true); activar si no queremos que el
+			// servidor se ponga a escuchar automatico
+			Servidor.IniciarServidor(); // desactrivar si no queremos que se
+										// reinicie el servidor al acabar con un
+										// cliente (manual)
+			botonParar.setEnabled(false);
+		}
+		else{
+			setText("No hay Ninguna conexion que puedas reiniciar");
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if(e.getSource()==botonIniciar){
-			
+
+		if (e.getSource() == botonIniciar) {
+
 			Servidor.IniciarServidor();
-			botonIniciar.setEnabled(false); 
+			botonIniciar.setEnabled(false);
+			botonParar.setEnabled(true);
 		}
-		
-		if(e.getSource()==subInformacion){
-			
-			JOptionPane.showMessageDialog(null, "Aplicacion Creada Por Saúl Blanco Y Eros Tamargo \n para Proyecto del Grado superior de Desarrollo de aplicaciones multiplataforma", "RemotEasy", 1);
+
+		if (e.getSource() == subInformacion) {
+
+			JOptionPane.showMessageDialog(null,
+					"Aplicacion Creada Por Saúl Blanco Y Eros Tamargo \n para Proyecto del Grado superior de Desarrollo de aplicaciones multiplataforma",
+					"RemotEasy", 1);
 		}
-	}
-	
+
+		if (e.getSource() == botonParar) {
+
+			cerrarConexion();
+		}
+
+	}// fin actionperform
 
 }

@@ -20,6 +20,7 @@ public class HiloServidor extends Thread{
 			p1.setText("SERVIDOR INICIADO CORRECTAMENTE...");
 			cliente= servidor.accept();
 			p1.setText("Accediendo desde: "+ cliente.getInetAddress());
+			p1.setSocket(cliente);
 			String aux=cliente.getInetAddress().toString();
 			new Entrante(cliente, p1, aux);		
 			servidor.close();
