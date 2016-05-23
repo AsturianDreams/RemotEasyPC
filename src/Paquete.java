@@ -13,13 +13,25 @@ public class Paquete {
 	 static final int RATON = 3;
 	 
 	 
-	 public Paquete(){
+	 public Paquete(int queHacer){
 		setImagen(null);
-		setQueHacer(0);
+		setQueHacer(queHacer);
 		setMoverX(0);
 		setMoverY(0);
 	 }
-
+	 
+	 public Paquete(int queHacer, byte[] imagen){
+		setImagen(imagen);
+		setQueHacer(queHacer);
+		setMoverX(0);
+		setMoverY(0);
+	 }
+	 public Paquete(int queHacer, int x, int y){
+		setImagen(null);
+		setQueHacer(queHacer);
+		setMoverX(x);
+		setMoverY(y);
+	 }
 
 	public byte[] getImagen() {
 		return Imagen;
