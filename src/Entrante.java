@@ -34,12 +34,11 @@ public class Entrante extends Thread{
 	try{		
 			InputStream is = conexion.getInputStream();
 			Paquete paquete;
-			int count=0;
+		
 			while(true){						//!conexion.isClosed()		
 				ObjectInputStream ois = new ObjectInputStream(is);
 				paquete = (Paquete)ois.readObject();	
-				count++;
-				p1.setText( "safasdfasdasd" + String.valueOf(count));
+			
 				switch (paquete.getQueHacer()){
 				case Paquete.RATON:
 					robot.clickEn(paquete.getMoverX(), paquete.getMoverY(), paquete.getBoton());
