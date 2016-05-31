@@ -1,6 +1,8 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -29,35 +31,41 @@ public class Entrante extends Thread{
 	
 	public void run(){
 		
-	try{
-		DataInputStream flujoEntrada = new DataInputStream (conexion.getInputStream());
-		
-			while(!conexion.isClosed()){
-				queHacer= flujoEntrada.readUTF();
-					sleep(1000);
-				//verificamos si se cerro la conexion
-				switch (queHacer){
-				case "moverRaton":
-					robot.clickEn(50, 50, robot.BOTON_IZQUIERDO);
-					p1.setText("raton movio");
+	try{		
+			InputStream is = conexion.getInputStream();
+			Paquete paquete;
+			int count=0;
+			while(true){						//!conexion.isClosed()		
+				ObjectInputStream ois = new ObjectInputStream(is);
+				paquete = (Paquete)ois.readObject();	
+				count++;
+				p1.setText( "safasdfasdasd" + String.valueOf(count));
+				switch (paquete.getQueHacer()){
+				case Paquete.RATON:
+					robot.clickEn(paquete.getMoverX(), paquete.getMoverY(), paquete.getBoton());
 					queHacer="";
 					break;
-				case "probar":
+				case Paquete.VIDEO:
 					
 					break;
-				}
-							
-
+				
+				case Paquete.CERRAR:
+				
+				break;
+				}		
+				
 			}//while 
 		
 	
 	
 	}//fin try
-	catch (IOException e) {			
+	catch (IOException e) {	
+		p1.setText(e.toString());
 		p1.cerrarConexion();
 	}
-	catch (InterruptedException e) {
-		//error del sleep
+	catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
 	
 		

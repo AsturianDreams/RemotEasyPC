@@ -14,9 +14,9 @@ public class robotControl {
 	Pantalla p1;
 	
 	
-	public static final int BOTON_IZQUIERDO =1;
-	public static final int BOTON_DERECHO=2;
-	public static final int BOTON_CENTRAL=3;
+	public static final int BOTON_IZQUIERDO =0;
+	public static final int BOTON_DERECHO=1;
+	public static final int BOTON_CENTRAL=2;
 	
 	public robotControl(Pantalla p1){
 		

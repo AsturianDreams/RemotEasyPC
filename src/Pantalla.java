@@ -108,10 +108,10 @@ public class Pantalla extends JFrame implements ActionListener {
 	}
 
 	public void cerrarConexion() {
-		if (conexion != null) {
-			setText("La conexion  ha sido cerrada");
+		if (conexion != null) {			
 			try {
 				conexion.close();
+				setText("La conexion  ha sido cerrada");
 			} catch (IOException e1) {
 				setText("fallo cerrando la conexion!!!");
 
@@ -122,7 +122,7 @@ public class Pantalla extends JFrame implements ActionListener {
 			Servidor.IniciarServidor(); // desactrivar si no queremos que se
 										// reinicie el servidor al acabar con un
 										// cliente (manual)
-			botonParar.setEnabled(false);
+			//botonParar.setEnabled(false);
 		}
 		else{
 			setText("No hay Ninguna conexion que puedas reiniciar");
