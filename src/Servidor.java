@@ -10,7 +10,7 @@ public class  Servidor {
 	static Pantalla p1; //pantalla Swing
 	static boolean ocupado;   // solo puede haber 1 conexion al mismo tiempo aqui controlamos que no pueda haber 2
 	
-	static final int PUERTO = 9097;
+	public int PUERTO = 9097;
 	
 	public Servidor(){
 		ocupado=false;
