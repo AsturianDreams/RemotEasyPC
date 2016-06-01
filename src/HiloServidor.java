@@ -17,7 +17,7 @@ public class HiloServidor extends Thread{
 		try {
 			ServerSocket servidor = new ServerSocket(Servidor.PUERTO);
 			Socket cliente;
-			p1.setText("Esperando conexion entrante...");
+			p1.setText("Esperando conexion entrante por el puerto: " + Servidor.PUERTO);
 			cliente= servidor.accept();
 			p1.setText("Accediendo desde: "+ cliente.getInetAddress());
 			p1.setSocket(cliente);
