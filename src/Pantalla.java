@@ -31,7 +31,7 @@ public class Pantalla extends JFrame implements ActionListener {
 	Socket conexion;
 
 	public Pantalla() {
-		super("RemotEasy");
+		super(Servidor.APLICACION);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
