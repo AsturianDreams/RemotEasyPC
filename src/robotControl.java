@@ -23,6 +23,9 @@ public class robotControl {
 		this.p1=p1;
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		dimensionPantalla = new Rectangle(screenSize);
+		anchoPantalla= screenSize.width;
+		altoPantalla = screenSize.height;
+		
 		try {
 			robot=new Robot();
 		} catch (AWTException e) {
@@ -33,7 +36,8 @@ public class robotControl {
 	
 	
 	public void clickEn(int x, int y, int boton)  {
-		
+		x=transformarX(x);
+		y=transformarY(y);
 		robot.mouseMove(x,y);
 		robot.mousePress(InputEvent.BUTTON1_MASK);
 		robot.mouseRelease(InputEvent.BUTTON1_MASK);
@@ -43,7 +47,15 @@ public class robotControl {
 		
 	}
 	
+	public int transformarX(int x){
+		int posicionX= x/100 * anchoPantalla;
+		return x;
+	}
 	
-	
-	
+	public int transformarY(int y){
+		int posicionY= y/100 * altoPantalla;
+		return  y;
+	}
+//	(pix real /pix pantalla)*100 = %a enviar  //movil envia
+//	pix real = %recibido/100 *pantalla        // pc recibe
 }
