@@ -43,8 +43,9 @@ public EnviarVideo(Socket a, Pantalla p1){
 		ByteArrayOutputStream salidaImagen = new ByteArrayOutputStream();
 		 ImageIO.write(image, "jpg", salidaImagen);
 	     byte[] bytesImagen = salidaImagen.toByteArray();
+	     Paquete paquete = new Paquete(Paquete.VIDEO, bytesImagen);
 	     ObjectOutputStream salida = new ObjectOutputStream( a.getOutputStream() );
-	     salida.writeObject( bytesImagen );
+	     salida.writeObject( paquete );
 	     salida.flush();
 			
 			
