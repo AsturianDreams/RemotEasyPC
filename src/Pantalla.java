@@ -50,7 +50,7 @@ public class Pantalla extends JFrame implements ActionListener {
 									// panel
 		pant.setEditable(false);
 		botonIniciar = new JButton("Arrancar");
-		botonParar = new JButton("Reinciar");
+		botonParar = new JButton("Detener");
 
 		panelGeneral.add(panel1, BorderLayout.WEST);
 		panelGeneral.add(panel2, BorderLayout.EAST);
@@ -81,10 +81,10 @@ public class Pantalla extends JFrame implements ActionListener {
 		subInformacion.addActionListener(this);
 		menuInformacion.add(subInformacion);
 
-		mainMenuBar.add(menuAyuda);
+		mainMenuBar.add(menuConfig);
 		mainMenuBar.add(menuInformacion);
 
-		menuItemHelp.addActionListener(this);
+		menuConfig.addActionListener(this);
 
 		setJMenuBar(mainMenuBar);
 		// fin menu
@@ -106,7 +106,9 @@ public class Pantalla extends JFrame implements ActionListener {
 	public void setText(String texto) {
 		pant.append("\n" + texto);
 	}
-
+    /**
+     * metodo que cierra el socket de conexion y vuelve a poner el servidor en escucha
+     */
 	public void cerrarConexion() {
 		if (conexion != null) {			
 			try {
@@ -128,7 +130,27 @@ public class Pantalla extends JFrame implements ActionListener {
 			setText("No hay Ninguna conexion que puedas reiniciar");
 		}
 	}
-
+	
+	/**
+     * metodo que cierra el socket de conexion y cierra la escucha del servidor
+     */
+	public void detenerConexion(){
+		if (conexion != null) {			
+			try {
+				conexion.close();
+				setSocket(null);
+			} catch (IOException e1) {				
+			}
+		}		
+				
+		if(Servidor.Servicio!= null){
+		Servidor.Servicio.pararServerSocket(); // paramos el servidor por si esta corriendo
+		Servidor.Servicio=null;		
+		}
+		botonIniciar.setEnabled(true);
+		botonParar.setEnabled(false);
+		setText("Exito al detener la escucha");
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -142,17 +164,22 @@ public class Pantalla extends JFrame implements ActionListener {
 		if (e.getSource() == subInformacion) {
 
 			JOptionPane.showMessageDialog(null,
-					"Aplicacion Creada Por Saúl Blanco Y Eros Tamargo \n para Proyecto del Grado superior de Desarrollo de aplicaciones multiplataforma",
+					"Aplicacion Creada Por Saul Blanco Y Eros Tamargo \n para Proyecto del Grado superior de Desarrollo de aplicaciones multiplataforma",
 					"RemotEasy", 1);
 		}
 		if (e.getSource() == menuConfigPuerto){
 			String a=JOptionPane.showInputDialog(null, "Inserte el puerto por el que escuchara el servidor");
-			Servidor.PUERTO = Integer.ParseInt(a);
-				
+			if(conexion==null){
+			Servidor.PUERTO = Integer.parseInt(a);
+			setText("Puerto cambiado al: " + Servidor.PUERTO);	
+			}
+			else{
+				setText("ERROR, debes parar el servidor antes de cambiar el puerto");	
+			}
 		}
 		if (e.getSource() == botonParar) {
 
-			cerrarConexion();
+			detenerConexion();
 		}
 
 	}// fin actionperform

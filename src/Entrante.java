@@ -16,6 +16,7 @@ public class Entrante extends Thread{
 	private String queHacer;
 	String Ip;
 	private robotControl robot;
+	private EnviarVideo video;
 	
 	public Entrante(Socket c, Pantalla p, String ip){
 		Ip=ip;
@@ -45,14 +46,22 @@ public class Entrante extends Thread{
 					queHacer="";
 					break;
 				case Paquete.VIDEO:
-					
+					if(video==null){
+						video = new EnviarVideo(conexion, p1);
+						video.start();
+					}
+					else{
+						video=null;
+						//video.stop();  deboi de parar la transmision del video
+					}
 					break;
 				
 				case Paquete.CERRAR:
 				
 				break;
-				}		
 				
+				}		
+				p1.setText("a");
 			}//while 
 		
 	

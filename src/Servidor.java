@@ -10,9 +10,10 @@ public class  Servidor {
 	static Pantalla p1; //pantalla Swing
 	static boolean ocupado;   // solo puede haber 1 conexion al mismo tiempo aqui controlamos que no pueda haber 2
 	
-	public int PUERTO = 9097;
+	public static int PUERTO = 9097;
 	public static final String APLICACION="RemotEasy";
 	
+	static HiloServidor Servicio;
 	public Servidor(){
 		ocupado=false;
 		 p1=new Pantalla();
@@ -23,7 +24,7 @@ public class  Servidor {
 	public static void IniciarServidor() {
 		
 		if(ocupado==false){ // si no hjay otra conexion entonces nos ponemos a escuchar
-				HiloServidor Servicio = new HiloServidor(p1);
+			Servicio = new HiloServidor(p1);
 				Servicio.start();
 				
 			}
