@@ -11,6 +11,7 @@ public class  Servidor {
 	static boolean ocupado;   // solo puede haber 1 conexion al mismo tiempo aqui controlamos que no pueda haber 2
 	
 	public int PUERTO = 9097;
+	public static final String APLICACION="RemotEasy";
 	
 	public Servidor(){
 		ocupado=false;
