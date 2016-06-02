@@ -26,8 +26,8 @@ public class Pantalla extends JFrame implements ActionListener {
 	JButton botonParar;
 	JScrollPane scrolito;
 	JMenuBar mainMenuBar;
-	JMenu menuAyuda, menuInformacion;
-	JMenuItem menuItemHelp, subInformacion, menuItemHelp2;
+	JMenu menuConfig, menuInformacion;
+	JMenuItem menuConfigPuerto, subInformacion, menuConfigOtro;
 	Socket conexion;
 
 	public Pantalla() {
@@ -46,7 +46,7 @@ public class Pantalla extends JFrame implements ActionListener {
 		subPanel1 = new JPanel();
 		subPanel2 = new JPanel();
 
-		pant = new JTextArea(0, 0); // no importa tamaño el layout lo ajusta al
+		pant = new JTextArea(0, 0); // no importa tamaÃ±o el layout lo ajusta al
 									// panel
 		pant.setEditable(false);
 		botonIniciar = new JButton("Arrancar");
@@ -68,13 +68,13 @@ public class Pantalla extends JFrame implements ActionListener {
 
 		// menu start
 		mainMenuBar = new JMenuBar();
-		menuAyuda = new JMenu("Ayuda");
-		menuItemHelp = new JMenuItem("Informacion1");
-		menuItemHelp2 = new JMenuItem("Informacion2");
-		menuAyuda.add(menuItemHelp);
-		menuAyuda.add(menuItemHelp2);
-		menuItemHelp.addActionListener(this);
-		menuItemHelp2.addActionListener(this);
+		menuConfig = new JMenu("Configuracion");
+		menuConfigPuerto = new JMenuItem("Puerto");
+		menuConfigOtro = new JMenuItem("Otros");
+		menuConfig.add(menuConfigPuerto);
+		menuConfig.add(menuConfigOtro);
+		menuConfigPuerto.addActionListener(this);
+		menuConfigOtro.addActionListener(this);
 
 		menuInformacion = new JMenu("Informacion");
 		subInformacion = new JMenuItem("Acerca De");
@@ -142,10 +142,14 @@ public class Pantalla extends JFrame implements ActionListener {
 		if (e.getSource() == subInformacion) {
 
 			JOptionPane.showMessageDialog(null,
-					"Aplicacion Creada Por Saúl Blanco Y Eros Tamargo \n para Proyecto del Grado superior de Desarrollo de aplicaciones multiplataforma",
+					"Aplicacion Creada Por SaÃºl Blanco Y Eros Tamargo \n para Proyecto del Grado superior de Desarrollo de aplicaciones multiplataforma",
 					"RemotEasy", 1);
 		}
-
+		if (e.getSource() == menuConfigPuerto){
+			String a=JOptionPane.showInputDialog(null, "Inserte el puerto por el que escuchara el servidor");
+			Servidor.PUERTO = Integer.ParseInt(a);
+				
+		}
 		if (e.getSource() == botonParar) {
 
 			cerrarConexion();
