@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 public class Paquete implements Serializable {
 
+	 private static final long serialVersionUID = 6529685098267757690L;
 	private byte[] Imagen;
 	private int queHacer;
 	private int moverX;
