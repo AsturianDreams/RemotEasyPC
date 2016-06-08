@@ -8,6 +8,8 @@ import java.net.UnknownHostException;
 
 import javax.swing.*;
 
+import com.example.eros.remoteasy.Paquete;
+import com.example.eros.remoteasy.*;
 
 public class Entrante extends Thread{
 
@@ -61,7 +63,7 @@ public class Entrante extends Thread{
 				break;
 				
 				}		
-				p1.setText("a");
+				
 			}//while 
 		
 	

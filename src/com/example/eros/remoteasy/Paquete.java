@@ -1,3 +1,4 @@
+package com.example.eros.remoteasy;
 import java.io.Serializable;
 
 public class Paquete implements Serializable {
@@ -9,11 +10,11 @@ public class Paquete implements Serializable {
 	private int boton;  //boton izq o derecho del raton
 	 
 	
-	 static final int CERRAR = 1;
-	 static final int VIDEO = 2;  //valores que puede tomar la variable queHacer
-	 static final int RATON = 3;
-	 static final int BOTON_IZQ = 0;
-	 static final int BOTON_DER = 1;
+	 public static final int CERRAR = 1;
+	 public static final int VIDEO = 2;  //valores que puede tomar la variable queHacer
+	 public static final int RATON = 3;
+	 public  static final int BOTON_IZQ = 0;
+	 public  static final int BOTON_DER = 1;
 	 
 	 public Paquete(int queHacer){
 		setImagen(null);

@@ -12,6 +12,9 @@ import java.net.SocketException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
+import com.example.eros.remoteasy.Paquete;
+
+
 public class EnviarVideo extends Thread{
 	Socket sokete;
 	boolean error;
@@ -20,6 +23,7 @@ public class EnviarVideo extends Thread{
 public EnviarVideo(Socket a, Pantalla p1){
 	sokete=a;
 	error=false;
+	this.p1= p1;
 }
 
 	public void run(){
@@ -36,6 +40,7 @@ public EnviarVideo(Socket a, Pantalla p1){
 	
 	private void capturarPantalla(Socket a){
 		try {
+			p1.setText("video mandao");
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle screenRectangle = new Rectangle(screenSize);
 		Robot robot = new Robot();
