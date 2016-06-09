@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -19,24 +20,34 @@ public class EnviarVideo extends Thread{
 	Socket sokete;
 	boolean error;
 	Pantalla p1;
+	ServerSocket servidorVideo;
 	
 public EnviarVideo(Socket a, Pantalla p1){
-	sokete=a;
 	error=false;
 	this.p1= p1;
+	
 }
 
 	public void run(){
-		while(error==false){
-			capturarPantalla(sokete);
+	
 			try {
-				sleep(100); 
-			} catch (InterruptedException e) {
-				
+				p1.setText("Servidor envio de video iniciado...");
+				servidorVideo = new ServerSocket(Servidor.PUERTO+1);
+			} catch (IOException e1) {
+				error=true;
+				 p1.setText("error iniciando el video");
 			}
+			while(true){
+				try {
+					sokete= servidorVideo.accept();	
+					capturarPantalla(sokete);
+					sokete.close();				
+					}	
+				catch (IOException e) {				 
+				} 		 
+		}//while
 			
-		}
-	}
+	}//run
 	
 	private void capturarPantalla(Socket a){
 		try {
@@ -56,9 +67,10 @@ public EnviarVideo(Socket a, Pantalla p1){
 			
 		} catch (IOException e) {
 			error=true;
-			p1.setText("La conexion de video ha terminado");
+			p1.setText("error en el capturarPantalla");
+			//p1.setText("La conexion de video ha terminado");
 		} catch (AWTException e) {
-			p1.setText("La conexion de video ha terminado");
+			//p1.setText("La conexion de video ha terminado");
 			error=true;
 		}
 	}
