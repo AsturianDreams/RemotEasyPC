@@ -16,6 +16,7 @@ public class Paquete implements Serializable {
 	 public static final int RATON = 3;
 	 public  static final int BOTON_IZQ = 0;
 	 public  static final int BOTON_DER = 1;
+	 public  static final int BOTON_DOBLE_CLICK = 2;
 	 
 	 public Paquete(int queHacer){
 		setImagen(null);
