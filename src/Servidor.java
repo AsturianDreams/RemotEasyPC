@@ -12,11 +12,14 @@ public class  Servidor {
 	
 	public static int PUERTO = 9097;
 	public static final String APLICACION="RemotEasy";
+	public static boolean enviandoVideo;
 	
 	static HiloServidor Servicio;
+	
 	public Servidor(){
 		ocupado=false;
 		 p1=new Pantalla();
+		 enviandoVideo=false;
 	}
 
 

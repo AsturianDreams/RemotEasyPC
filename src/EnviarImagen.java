@@ -18,6 +18,7 @@ public class EnviarImagen extends Thread{
 public EnviarImagen(Socket a){
 	sokete=a;
 	error=false;
+	Servidor.enviandoVideo = true;
 }
 
 	public void run(){

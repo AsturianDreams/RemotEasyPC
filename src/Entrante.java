@@ -19,6 +19,7 @@ public class Entrante extends Thread{
 	String Ip;
 	private robotControl robot;
 	private EnviarVideo video;
+	private ObjectInputStream ois;
 	
 	public Entrante(Socket c, Pantalla p, String ip){
 		Ip=ip;
@@ -29,19 +30,19 @@ public class Entrante extends Thread{
 		p1.setSocket(c);
 		Thread hilo = new Thread(this);
 		hilo.start();	
+	
 	}
 	
 	
 	public void run(){
 		
 	try{		
-			InputStream is = conexion.getInputStream();
+			 
 			Paquete paquete;
 		
-			while(true){						//!conexion.isClosed()		
-				ObjectInputStream ois = new ObjectInputStream(is);
+			while(true){						//!conexion.isClosed()						
+				ois = new ObjectInputStream(conexion.getInputStream());
 				paquete = (Paquete)ois.readObject();	
-			
 				switch (paquete.getQueHacer()){
 				case Paquete.RATON:
 					robot.clickEn(paquete.getMoverX(), paquete.getMoverY(), paquete.getBoton());

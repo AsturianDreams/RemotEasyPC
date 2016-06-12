@@ -135,6 +135,7 @@ public class Pantalla extends JFrame implements ActionListener {
      * metodo que cierra el socket de conexion y cierra la escucha del servidor
      */
 	public void detenerConexion(){
+		
 		if (conexion != null) {			
 			try {
 				conexion.close();
@@ -147,6 +148,7 @@ public class Pantalla extends JFrame implements ActionListener {
 		Servidor.Servicio.pararServerSocket(); // paramos el servidor por si esta corriendo
 		Servidor.Servicio=null;		
 		}
+		Servidor.enviandoVideo=false; //cambiando esta variable la clase enviarVideo sale del bucle 
 		botonIniciar.setEnabled(true);
 		botonParar.setEnabled(false);
 		setText("Exito al detener la escucha");

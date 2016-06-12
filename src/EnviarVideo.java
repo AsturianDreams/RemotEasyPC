@@ -25,19 +25,19 @@ public class EnviarVideo extends Thread{
 public EnviarVideo(Socket a, Pantalla p1){
 	error=false;
 	this.p1= p1;
-	
+	Servidor.enviandoVideo = true;
 }
 
 	public void run(){
 	
-			try {
-				p1.setText("Servidor envio de video iniciado...");
+			try {			
 				servidorVideo = new ServerSocket(Servidor.PUERTO+1);
+				p1.setText("Servidor envio de video iniciado...");
 			} catch (IOException e1) {
 				error=true;
 				 p1.setText("error iniciando el video");
 			}
-			while(true){
+			while(Servidor.enviandoVideo== true){
 				try {
 					sokete= servidorVideo.accept();	
 					capturarPantalla(sokete);
@@ -46,12 +46,17 @@ public EnviarVideo(Socket a, Pantalla p1){
 				catch (IOException e) {				 
 				} 		 
 		}//while
+			try {
+				servidorVideo.close();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
 			
 	}//run
 	
 	private void capturarPantalla(Socket a){
 		try {
-			p1.setText("video mandao");
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle screenRectangle = new Rectangle(screenSize);
 		Robot robot = new Robot();
