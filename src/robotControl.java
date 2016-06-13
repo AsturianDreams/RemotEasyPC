@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 
+import com.example.eros.remoteasy.Paquete;
+
 
 public class robotControl {
 
@@ -39,8 +41,25 @@ public class robotControl {
 		x=transformarX(x);
 		y=transformarY(y);
 		robot.mouseMove(x,y);
-		robot.mousePress(InputEvent.BUTTON1_MASK);
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		
+		if( boton == Paquete.BOTON_IZQ ){
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			System.out.println("btn izq");
+		}
+		if( boton == Paquete.BOTON_DER ){
+			robot.mousePress(InputEvent.BUTTON3_MASK);
+			robot.mouseRelease(InputEvent.BUTTON3_MASK);
+			System.out.println("btn der");
+		}
+		if( boton == Paquete.BOTON_DOBLE_CLICK ){
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+			System.out.println("dbclick");
+		}
+		
 		
 	}
 	
