@@ -40,7 +40,7 @@ public class Entrante extends Thread{
 			 
 			Paquete paquete;
 		
-			while(true){						//!conexion.isClosed()						
+			while(!conexion.isClosed()){										
 				ois = new ObjectInputStream(conexion.getInputStream());
 				paquete = (Paquete)ois.readObject();	
 				switch (paquete.getQueHacer()){
