@@ -38,39 +38,45 @@ public class robotControl {
 	
 	
 	public void clickEn(int x, int y, int boton)  {
-		x=transformarX(x);
+		
+		x=transformarX(x);		
 		y=transformarY(y);
+		
 		robot.mouseMove(x,y);
 		
 		if( boton == Paquete.BOTON_IZQ ){
 			robot.mousePress(InputEvent.BUTTON1_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			System.out.println("btn izq");
+			
 		}
 		if( boton == Paquete.BOTON_DER ){
 			robot.mousePress(InputEvent.BUTTON3_MASK);
 			robot.mouseRelease(InputEvent.BUTTON3_MASK);
-			System.out.println("btn der");
+			
 		}
 		if( boton == Paquete.BOTON_DOBLE_CLICK ){
 			robot.mousePress(InputEvent.BUTTON1_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_MASK);
 			robot.mousePress(InputEvent.BUTTON1_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			System.out.println("dbclick");
+			
 		}
 		
 		
 	}
 	
 	public int transformarX(int x){
-		int posicionX= x/100 * anchoPantalla;
-		return x;
+		float xx= (float) x;
+		float xancho= (float)anchoPantalla;
+		float posicionX= xx/100 * xancho;
+		return (int)posicionX;
 	}
 	
 	public int transformarY(int y){
-		int posicionY= y/100 * altoPantalla;
-		return  y;
+		float yy= (float) y;
+		float yancho= (float)altoPantalla;
+		float posiciony= yy/100 * yancho;
+		return (int)posiciony;
 	}
 //	(pix real /pix pantalla)*100 = %a enviar  //movil envia
 //	pix real = %recibido/100 *pantalla        // pc recibe

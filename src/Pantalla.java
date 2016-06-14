@@ -5,14 +5,19 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import org.omg.CORBA.portable.InputStream;
 
 public class Pantalla extends JFrame implements ActionListener {
 
@@ -36,7 +41,9 @@ public class Pantalla extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setSize(750, 500);
-
+		
+		
+		
 		panelGeneral = new JPanel(new BorderLayout(20, 20));
 		panel1 = new JPanel();
 		panel2 = new JPanel();
