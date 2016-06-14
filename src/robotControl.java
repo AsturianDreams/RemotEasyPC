@@ -41,7 +41,6 @@ public class robotControl {
 		
 		x=transformarX(x);		
 		y=transformarY(y);
-		
 		robot.mouseMove(x,y);
 		
 		if( boton == Paquete.BOTON_IZQ ){
