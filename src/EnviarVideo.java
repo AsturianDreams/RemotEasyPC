@@ -35,7 +35,7 @@ public EnviarVideo(Socket a, Pantalla p1){
 				p1.setText("Servidor envio de video iniciado...");
 			} catch (IOException e1) {
 				error=true;
-				 p1.setText("error iniciando el video");
+				 p1.setText("Servidor Apagado");
 			}
 			while(Servidor.enviandoVideo== true){
 				try {
@@ -50,7 +50,7 @@ public EnviarVideo(Socket a, Pantalla p1){
 				servidorVideo.close();
 			} catch (IOException e) {
 				
-				e.printStackTrace();
+				p1.setText("Fin de envio De Video");
 			}
 			
 	}//run
