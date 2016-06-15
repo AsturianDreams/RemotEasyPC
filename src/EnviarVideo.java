@@ -18,12 +18,10 @@ import com.example.eros.remoteasy.Paquete;
 
 public class EnviarVideo extends Thread{
 	Socket sokete;
-	boolean error;
 	Pantalla p1;
 	ServerSocket servidorVideo;
 	
 public EnviarVideo(Socket a, Pantalla p1){
-	error=false;
 	this.p1= p1;
 	Servidor.enviandoVideo = true;
 }
@@ -34,8 +32,8 @@ public EnviarVideo(Socket a, Pantalla p1){
 				servidorVideo = new ServerSocket(Servidor.PUERTO+1);
 				p1.setText("Servidor envio de video iniciado...");
 			} catch (IOException e1) {
-				error=true;
-				 p1.setText("Servidor Apagado");
+				Servidor.enviandoVideo = false;
+				 p1.setText("Servidor de video no pudo iniciarse correctamente");
 			}
 			while(Servidor.enviandoVideo== true){
 				try {
@@ -43,14 +41,15 @@ public EnviarVideo(Socket a, Pantalla p1){
 					capturarPantalla(sokete);
 					sokete.close();				
 					}	
-				catch (IOException e) {				 
+				catch (IOException e) {	
+					 p1.setText("Cerrando Envio de Video");
+					 Servidor.enviandoVideo = false;
 				} 		 
 		}//while
 			try {
-				servidorVideo.close();
+				servidorVideo.close(); //cerramos el socket por si acaso
 			} catch (IOException e) {
-				
-				p1.setText("Fin de envio De Video");
+
 			}
 			
 	}//run
@@ -71,12 +70,11 @@ public EnviarVideo(Socket a, Pantalla p1){
 			
 			
 		} catch (IOException e) {
-			error=true;
+		
 			p1.setText("error en el capturarPantalla");
 			//p1.setText("La conexion de video ha terminado");
 		} catch (AWTException e) {
-			//p1.setText("La conexion de video ha terminado");
-			error=true;
+
 		}
 	}
 }
