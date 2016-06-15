@@ -15,8 +15,7 @@ import com.example.eros.remoteasy.Paquete;
 public class ClasePruebaConexiones {
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		robotControl a = new robotControl(null);
-		a.clickEn(50, 50, Paquete.BOTON_DER);
+		EnviarVideo.prueba();
 	}
 
 }

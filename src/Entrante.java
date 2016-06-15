@@ -71,7 +71,7 @@ public class Entrante extends Thread{
 	
 	}//fin try
 	catch (IOException e) {	
-		p1.setText(e.toString());
+		
 		p1.cerrarConexion();
 	}
 	catch (ClassNotFoundException e) {

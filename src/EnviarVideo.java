@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -44,6 +45,10 @@ public EnviarVideo(Socket a, Pantalla p1){
 				catch (IOException e) {	
 					 p1.setText("Cerrando Envio de Video");
 					 Servidor.enviandoVideo = false;
+					 try {
+						servidorVideo.close();
+					} catch (IOException e1) {						
+					}
 				} 		 
 		}//while
 			try {
@@ -53,6 +58,7 @@ public EnviarVideo(Socket a, Pantalla p1){
 			}
 			
 	}//run
+	
 	
 	private void capturarPantalla(Socket a){
 		try {
@@ -70,8 +76,13 @@ public EnviarVideo(Socket a, Pantalla p1){
 			
 			
 		} catch (IOException e) {
-		
+			try {
+				servidorVideo.close();
+			} catch (IOException e1) {
+				
+			}
 			p1.setText("error en el capturarPantalla");
+			Servidor.enviandoVideo = false;
 			//p1.setText("La conexion de video ha terminado");
 		} catch (AWTException e) {
 
